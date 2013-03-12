@@ -87,9 +87,14 @@ public class Master {
 	 *
 	 */
 	private class ManagerThread extends Thread {
+		
+		private int port;
+		public ManagerThread(int port) {
+			this.port=port;
+    }
 		public void run() {
 			try {
-				ServerSocket serverSocket = new ServerSocket(Ports.registrationPort());
+				ServerSocket serverSocket = new ServerSocket(port);
 				idleHandles=new TreeSet<ClientHandle>(ObjectComparator.get());
 				workingClients=new TreeSet<ClientHandle>(ObjectComparator.get());
 				while (true) {
@@ -113,9 +118,17 @@ public class Master {
 	 * @throws IOException
 	 */
 	public Master() throws IOException {
-		(new ManagerThread()).start();
+		(new ManagerThread(Ports.registrationPort())).start();
 	}
 
+	/**
+	 * creates a new server instance for server-client interactions
+	 * @throws IOException
+	 */
+	public Master(int port) throws IOException {
+		(new ManagerThread(port)).start();
+	}
+	
 	/**
 	 * gets one of the client handles marked as idle
 	 * @return a client handle

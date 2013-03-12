@@ -13,7 +13,7 @@ import java.net.UnknownHostException;
  * @author Stephan Richter
  *
  */
-public class Client {
+public abstract class Client {
 	protected Socket socket;
 	private ObjectOutputStream objectOutStream=null;
 	
@@ -105,7 +105,7 @@ public class Client {
 	 * @throws InterruptedException
 	 * @throws ClassNotFoundException
 	 */
-	public Client(String hostname) throws UnknownHostException, IOException, InterruptedException, ClassNotFoundException {
+	public Client(String hostname,String configName) throws UnknownHostException, IOException, InterruptedException, ClassNotFoundException {
 		this(hostname,Ports.registrationPort());
   }
 
@@ -138,17 +138,5 @@ public class Client {
 			}
 		}
 		return result;
-	}
-
-	/**
-	 * a short test program
-	 * @param args
-	 * @throws UnknownHostException
-	 * @throws IOException
-	 * @throws InterruptedException
-	 * @throws ClassNotFoundException
-	 */
-	public static void main(String[] args) throws UnknownHostException, IOException, InterruptedException, ClassNotFoundException {
-		new Client("localhost",Ports.registrationPort());
 	}
 }
